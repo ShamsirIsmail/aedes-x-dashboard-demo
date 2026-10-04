@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f4f7f2">
+  <meta name="description" content="Interactive AEDES-X smart mosquito trap dashboard demo.">
+  <title>AEDES-X — Interactive Dashboard Demo</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="demo-ribbon">
+    <span class="demo-dot"></span>
+    <span data-t="demoRibbon">Interactive portfolio demo — simulated hardware response</span>
+  </div>
+
+  <div class="shell">
+    <header class="topbar">
+      <div>
+        <div class="brand">AEDES-<b>X</b></div>
+        <div class="top-sub" data-t="portfolioDemo">Portfolio Demo</div>
+      </div>
+      <div class="topRight">
+        <div class="lang" aria-label="Language">
+          <button id="bmBtn" type="button">BM</button>
+          <button id="enBtn" type="button">EN</button>
+        </div>
+        <div class="headTime" id="headTime">--:--</div>
+      </div>
+    </header>
+
+    <div id="lockBanner" class="lock">
+      <strong data-t="locked">Main switch OFF — controls are locked</strong>
+      <span data-t="lockedHelp">Turn the virtual main switch on to test the dashboard.</span>
+    </div>
+
+    <!-- HOME -->
+    <main id="home" class="page active">
+      <section class="card hero">
+        <div class="heroGrid">
+          <div class="device-stage compact">
+            <div class="photo-frame">
+              <img class="device-photo" src="./assets/aedesx-prototype.webp" alt="Real AEDES-X prototype">
+              <div class="uv-mask"></div>
+              <div class="uv-glow"></div>
+              <div class="led-glow"></div>
+            </div>
+          </div>
+
+          <div class="heroText">
+            <span class="onlineBadge"><span class="dot"></span><span data-t="online">DEMO ONLINE</span></span>
+            <h1>AEDES-X</h1>
+            <p data-t="heroText">Smart mosquito control for a cleaner, safer environment.</p>
+            <div class="heroChips">
+              <div class="chip" data-t="safe">SAFE</div>
+              <div class="chip" data-t="smart">SMART</div>
+              <div class="chip">STEM</div>
+            </div>
+            <div class="real-photo-note" data-t="realPhoto">Uses the real AEDES-X prototype photo.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card status">
+        <div class="secTitle">
+          <h2 data-t="current">Current Status</h2>
+          <span class="tiny system-ok" id="sysTiny">● SYSTEM</span>
+        </div>
+        <div class="statusGrid">
+          <div class="miniCard">
+            <div class="miniIcon uvIcon">☀</div>
+            <div class="miniLabel" data-t="uv">UV Light</div>
+            <div class="miniVal" id="uvVal">OFF</div>
+          </div>
+          <div class="miniCard">
+            <div class="miniIcon fanIcon"><span id="fanGlyph">✤</span></div>
+            <div class="miniLabel" data-t="fan">Fan</div>
+            <div class="miniVal" id="fanVal">OFF</div>
+          </div>
+          <div class="miniCard">
+            <div class="miniIcon switchIcon">⏻</div>
+            <div class="miniLabel" data-t="mainSwitch">Main Switch</div>
+            <div class="miniVal" id="switchVal">ON</div>
+          </div>
+        </div>
+        <div class="ldrRow">
+          <div>
+            <div class="miniLabel" data-t="ldr">LDR Reading</div>
+            <div class="ldrNumber" id="ldrVal">1200</div>
+          </div>
+          <div class="bar"><div id="ldrFill" class="fill"></div></div>
+          <div id="ldrPill" class="pill">BRIGHT</div>
+        </div>
+      </section>
+
+      <section class="card modeCard">
+        <div class="secTitle">
+          <h2 data-t="mode">Operating Mode</h2>
+          <span class="tiny" data-t="choose">Choose how AEDES-X operates</span>
+        </div>
+        <div class="modes">
+          <button class="mode" id="mode0" type="button" data-mode="0">
+            <span class="ico">🔧</span><strong data-t="manual">Manual</strong><small data-t="manualSub">Turn ON/OFF manually</small>
+          </button>
+          <button class="mode" id="mode1" type="button" data-mode="1">
+            <span class="ico">💡</span><strong data-t="auto">Auto LDR</strong><small data-t="autoSub">Automatic in darkness</small>
+          </button>
+          <button class="mode" id="mode2" type="button" data-mode="2">
+            <span class="ico">◷</span><strong data-t="timer">Timer</strong><small data-t="timerSub">Scheduled operation</small>
+          </button>
+        </div>
+        <div class="manualBox" id="manualBox">
+          <button class="onBtn" id="manualOn" type="button" data-t="turnOn">TURN ON</button>
+          <button class="offBtn" id="manualOff" type="button" data-t="turnOff">TURN OFF</button>
+        </div>
+      </section>
+
+      <section class="card countCard">
+        <div class="secTitle">
+          <h2 data-t="countdown">Timer Countdown</h2>
+          <span class="tiny" id="nextTiny">DUSK</span>
+        </div>
+        <div class="countGrid">
+          <div class="countMain">
+            <div class="countTag" id="countTag">STARTS IN</div>
+            <div class="countWindow" id="countWindow">Next: Dusk</div>
+            <div class="countValue" id="countValue">00:00:00</div>
+            <div class="countUnits" data-t="hms">hours · minutes · seconds</div>
+          </div>
+          <div class="schedule">
+            <div id="dawnSlot" class="slot"><strong>☀ <span data-t="dawn">Dawn</span></strong><div>05:30 – 07:30</div></div>
+            <div id="duskSlot" class="slot"><strong>◐ <span data-t="dusk">Dusk</span></strong><div>18:00 – 19:30</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card maintHome">
+        <div class="maintHomeTop">
+          <div class="maintIcon">🔧</div>
+          <div class="maintHomeText">
+            <div class="maintLabel" data-t="maintenance">Maintenance</div>
+            <div class="maintNext" id="maintHomeNext">Next: CO₂ mixture replacement</div>
+            <div class="maintRemain" id="maintHomeRemain">14 days remaining</div>
+          </div>
+          <span class="maintBadge good" id="maintHomeBadge">✓ Good</span>
+        </div>
+        <button class="maintViewBtn" id="openMaintenanceBtn" type="button" data-t="viewMaintenance">View Maintenance</button>
+      </section>
+    </main>
+
+    <!-- CONTROL -->
+    <main id="control" class="page">
+      <section class="card digitalTwin">
+        <div class="secTitle">
+          <div>
+            <h2 data-t="liveTwin">Live AEDES-X Demo</h2>
+            <span class="tiny" data-t="liveTwinSub">Controls below simulate the prototype response.</span>
+          </div>
+          <span class="demo-badge" data-t="simulation">SIMULATION</span>
+        </div>
+
+        <div class="device-stage large">
+          <div class="photo-frame">
+            <img class="device-photo" src="./assets/aedesx-prototype.webp" alt="Real AEDES-X prototype interactive preview">
+            <div class="uv-mask"></div>
+            <div class="uv-glow"></div>
+            <div class="led-glow"></div>
+            <div class="state-chip" id="photoStateChip">TRAP OFF</div>
+          </div>
+        </div>
+
+        <div class="oled-shell" aria-label="Simulated OLED display">
+          <div class="oled-glass">
+            <div class="oled-title">AEDES-X</div>
+            <pre id="oledText">MODE: MANUAL
+UV:OFF FAN:OFF
+LDR:1200 BRIGHT</pre>
+          </div>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-control">
+            <div>
+              <strong data-t="virtualSwitch">Virtual Main Switch</strong>
+              <small data-t="virtualSwitchHelp">Same lock behaviour as the physical switch.</small>
+            </div>
+            <label class="toggle">
+              <input id="mainSwitchToggle" type="checkbox" checked>
+              <span></span>
+            </label>
+          </div>
+
+          <div class="sim-control stacked">
+            <div>
+              <strong data-t="ambientLight">Ambient Light Simulator</strong>
+              <small data-t="ambientHelp">Move toward Dark to test Auto LDR mode.</small>
+            </div>
+            <div class="range-labels"><span data-t="bright">Bright</span><b id="ldrSliderValue">1200</b><span data-t="dark">Dark</span></div>
+            <input id="ldrSlider" type="range" min="200" max="4095" value="1200" step="25">
+            <div class="threshold-note">OFF ≤ 1800 · ON ≥ 2100</div>
+          </div>
+
+          <button id="physicalModeBtn" class="physical-btn" type="button">
+            <span>●</span>
+            <div><strong data-t="pressModeButton">Press Physical Mode Button</strong><small>GPIO 32 · Manual → Auto LDR → Timer</small></div>
+          </button>
+        </div>
+      </section>
+
+      <section class="card modeCard">
+        <div class="secTitle"><h2 data-t="mode">Operating Mode</h2><span class="tiny" data-t="sameLogic">Same logic as the ESP32 dashboard</span></div>
+        <div class="modes">
+          <button class="mode control-mode" id="cMode0" type="button" data-mode="0"><span class="ico">🔧</span><strong data-t="manual">Manual</strong></button>
+          <button class="mode control-mode" id="cMode1" type="button" data-mode="1"><span class="ico">💡</span><strong data-t="auto">Auto LDR</strong></button>
+          <button class="mode control-mode" id="cMode2" type="button" data-mode="2"><span class="ico">◷</span><strong data-t="timer">Timer</strong></button>
+        </div>
+        <div class="manualBox" id="controlManualBox">
+          <button class="onBtn manual-on" type="button" data-t="turnOn">TURN ON</button>
+          <button class="offBtn manual-off" type="button" data-t="turnOff">TURN OFF</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- TIMER -->
+    <main id="timer" class="page">
+      <section class="card panel">
+        <div class="secTitle">
+          <h2 data-t="timer">Timer</h2>
+          <span class="tiny" data-t="portfolioClock">Browser clock simulation</span>
+        </div>
+        <div class="row"><span data-t="currentTime">Current Time</span><strong id="timerClock">--:--:--</strong></div>
+        <div class="row"><span data-t="dawn">Dawn</span><strong>05:30 – 07:30</strong></div>
+        <div class="row"><span data-t="dusk">Dusk</span><strong>18:00 – 19:30</strong></div>
+        <div class="warning" data-t="timerExplain">In the real ESP32 dashboard, the phone synchronizes time locally. This demo uses your browser clock.</div>
+      </section>
+
+      <section class="card panel">
+        <div class="secTitle"><h2 data-t="timerDemo">Timer Test</h2><span class="tiny" data-t="optionalOverride">Optional demo override</span></div>
+        <label class="switch-row">
+          <div><strong data-t="useDemoTime">Use demo time</strong><small data-t="useDemoTimeHelp">Try a scheduled period without changing your device clock.</small></div>
+          <label class="toggle"><input id="demoTimeToggle" type="checkbox"><span></span></label>
+        </label>
+        <div id="demoTimeControls" class="demo-time-controls">
+          <label><span data-t="demoHour">Demo hour</span><input id="demoHour" type="range" min="0" max="23" value="18"><b id="demoHourVal">18:00</b></label>
+          <div class="quick-times">
+            <button type="button" data-time="6.25">06:15 Dawn</button>
+            <button type="button" data-time="12">12:00 Day</button>
+            <button type="button" data-time="18.5">18:30 Dusk</button>
+            <button type="button" data-time="22">22:00 Night</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- SYSTEM -->
+    <main id="system" class="page">
+      <section class="card panel">
+        <div class="secTitle"><h2 data-t="system">System</h2><span class="demo-badge" data-t="demo">DEMO</span></div>
+        <div class="row"><span data-t="prototypeHotspot">Prototype Hotspot</span><strong>AedesX-Control</strong></div>
+        <div class="row"><span data-t="prototypeIp">Prototype Local IP</span><strong>192.168.4.1</strong></div>
+        <div class="row"><span data-t="demoRuntime">Demo Runtime</span><strong id="uptime">00:00:00</strong></div>
+        <div class="row"><span data-t="activeTime">Trap Active Time</span><strong id="activeTime">00:00:00</strong></div>
+        <div class="row"><span data-t="threshold">LDR Threshold</span><strong>Dark ≥ 2100 / Light ≤ 1800</strong></div>
+        <div class="warning" data-t="systemExplain">This public portfolio version simulates ESP32 responses in the browser. The prototype firmware still runs locally on the ESP32.</div>
+        <button class="actionBtn secondaryMaintBtn" id="systemMaintenanceBtn" type="button" data-t="viewMaintenance">View Maintenance</button>
+      </section>
+    </main>
+
+    <!-- MAINTENANCE -->
+    <main id="maintenancePage" class="page">
+      <section class="maintHeader">
+        <button class="backBtn" id="maintenanceBackBtn" type="button" aria-label="Back">‹</button>
+        <div>
+          <h2 data-t="maintenance">Maintenance</h2>
+          <p data-t="maintSubtitle">Keep AEDES-X in good condition.</p>
+        </div>
+      </section>
+
+      <section class="card maintDetail">
+        <div class="maintCardHead">
+          <div class="maintTitleWrap"><span class="maintBigIcon">⚗</span><strong data-t="co2Mixture">CO₂ Mixture</strong></div>
+          <span class="maintBadge neutral" id="co2Badge">○ Not Set</span>
+        </div>
+        <div class="maintDates">
+          <div><span data-t="lastReplaced">Last replaced</span><strong id="co2Last">—</strong></div>
+          <div><span data-t="nextReplacement">Next replacement</span><strong id="co2Next">—</strong></div>
+        </div>
+        <div class="maintRemaining"><span>◷</span><strong id="co2Remaining">Setup required</strong></div>
+        <button class="actionBtn" id="markCo2" type="button" data-t="markReplaced">Mark as Replaced</button>
+        <div class="intervalRow">
+          <div><strong data-t="replacementInterval">Replacement interval</strong><small data-t="daysUnit">days</small></div>
+          <div class="stepper">
+            <button type="button" data-item="co2" data-delta="-1">−</button>
+            <strong id="co2Days">14</strong>
+            <button type="button" data-item="co2" data-delta="1">+</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card maintDetail">
+        <div class="maintCardHead">
+          <div class="maintTitleWrap"><span class="maintBigIcon">▦</span><strong data-t="meshCleaning">Mesh Cleaning</strong></div>
+          <span class="maintBadge neutral" id="meshBadge">○ Not Set</span>
+        </div>
+        <div class="maintDates">
+          <div><span data-t="lastCleaned">Last cleaned</span><strong id="meshLast">—</strong></div>
+          <div><span data-t="nextCleaning">Next cleaning</span><strong id="meshNext">—</strong></div>
+        </div>
+        <div class="maintRemaining"><span>◷</span><strong id="meshRemaining">Setup required</strong></div>
+        <button class="actionBtn" id="markMesh" type="button" data-t="markCleaned">Mark as Cleaned</button>
+        <div class="intervalRow">
+          <div><strong data-t="cleaningInterval">Cleaning interval</strong><small data-t="daysUnit">days</small></div>
+          <div class="stepper">
+            <button type="button" data-item="mesh" data-delta="-1">−</button>
+            <strong id="meshDays">14</strong>
+            <button type="button" data-item="mesh" data-delta="1">+</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="warning maintNote">
+        <strong data-t="aboutMaintenance">About Maintenance</strong>
+        <div data-t="maintNote">Reminder intervals are adjustable. This portfolio demo stores maintenance history only in this browser.</div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="nav" aria-label="Dashboard navigation">
+    <button id="navHome" class="active" type="button" data-page="home"><span class="nIcon">⌂</span><span data-t="home">Home</span></button>
+    <button id="navControl" type="button" data-page="control"><span class="nIcon">☷</span><span data-t="control">Control</span></button>
+    <button id="navTimer" type="button" data-page="timer"><span class="nIcon">◷</span><span data-t="timer">Timer</span></button>
+    <button id="navSystem" type="button" data-page="system"><span class="nIcon">⚙</span><span data-t="system">System</span></button>
+  </nav>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
