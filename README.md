@@ -149,6 +149,7 @@ The demonstration utilizes high-resolution photographs of the actual 3D-printed 
 - [`assets/aedesx-off.webp`](./assets/aedesx-off.webp) — Prototype in powered-down standby state.
 - [`assets/aedesx-on.webp`](./assets/aedesx-on.webp) — Prototype operating with UV illumination and active indicator.
 - [`assets/aedesx-prototype.webp`](./assets/aedesx-prototype.webp) — Engineering prototype overview.
+- [`assets/desk-workspace-bg.jpg`](./assets/desk-workspace-bg.jpg) — Photorealistic indoor testing desk environment.
 
 ---
 

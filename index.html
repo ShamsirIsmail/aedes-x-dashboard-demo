@@ -236,24 +236,25 @@
       </div>
 
       <div class="room-scene">
-        <div class="window"><span></span><span></span></div>
-        <div class="plant plant-a"><i></i><i></i><i></i></div>
-        <div class="plant plant-b"><i></i><i></i></div>
-        <div class="wall-shadow"></div>
-        <div class="table">
-          <div class="product-shadow"></div>
+        <div class="desk-ambient-glow" aria-hidden="true"></div>
+        <div class="product-stage">
+          <div class="product-ground-shadow" aria-hidden="true">
+            <span class="shadow-diffuse"></span>
+            <span class="shadow-contact"></span>
+            <span class="shadow-uv-glow"></span>
+          </div>
           <div class="product-stack">
             <img id="productOff" class="product-img active" src="./assets/aedesx-off.webp" alt="Real AEDES-X prototype with UV and green indicator off">
             <img id="productOn" class="product-img" src="./assets/aedesx-on.webp" alt="Real AEDES-X prototype with UV and green indicator on">
           </div>
-          <div class="product-state-card">
-            <div class="state-heading"><span id="stateDot"></span><strong id="productState">TRAP OFF</strong></div>
-            <div class="state-grid">
-              <div><small data-t="mode">Mode</small><b id="productMode">MANUAL</b></div>
-              <div><small data-t="uv">UV Light</small><b id="productUv">OFF</b></div>
-              <div><small data-t="fan">Fan</small><b id="productFan">OFF</b></div>
-              <div><small data-t="ldr">LDR</small><b id="productLdr">1200</b></div>
-            </div>
+        </div>
+        <div class="product-state-card">
+          <div class="state-heading"><span id="stateDot"></span><strong id="productState">TRAP OFF</strong></div>
+          <div class="state-grid">
+            <div><small data-t="mode">Mode</small><b id="productMode">MANUAL</b></div>
+            <div><small data-t="uv">UV Light</small><b id="productUv">OFF</b></div>
+            <div><small data-t="fan">Fan</small><b id="productFan">OFF</b></div>
+            <div><small data-t="ldr">LDR</small><b id="productLdr">1200</b></div>
           </div>
         </div>
       </div>
