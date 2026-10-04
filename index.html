@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#eef5f0">
+  <meta name="description" content="Interactive AEDES-X ESP32 smart mosquito trap portfolio demo with a clickable phone dashboard and real product state preview.">
+  <title>AEDES-X — Interactive Product Demo</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="sitebar">
+    <div class="sitebrand">
+      <div class="logo">AEDES-<span>X</span></div>
+      <div class="sitecopy">
+        <strong data-t="portfolioTitle">Interactive Product Demo</strong>
+        <small data-t="portfolioSub">Control the dashboard and watch the real prototype respond.</small>
+      </div>
+    </div>
+    <div class="demo-label"><span></span><b data-t="simulationLabel">Browser Simulation</b></div>
+  </header>
+
+  <main class="experience">
+    <section class="phone-zone" aria-label="Interactive dashboard phone">
+      <div class="phone-caption">
+        <span class="step">01</span>
+        <div>
+          <strong data-t="tryDashboard">Try the dashboard</strong>
+          <small data-t="tryDashboardSub">Tap the controls inside the phone.</small>
+        </div>
+      </div>
+
+      <div class="phone">
+        <div class="speaker"></div>
+        <div class="camera"></div>
+        <div class="phone-screen">
+          <header class="dash-top">
+            <div class="dash-brand">AEDES-<span>X</span></div>
+            <div class="dash-actions">
+              <div class="lang">
+                <button id="bmBtn" type="button">BM</button>
+                <button id="enBtn" type="button">EN</button>
+              </div>
+              <strong id="headTime">--:--</strong>
+            </div>
+          </header>
+
+          <div id="lockBanner" class="lock-banner">
+            <span>!</span>
+            <div><strong data-t="locked">Main switch OFF</strong><small data-t="lockedHelp">Controls are locked.</small></div>
+          </div>
+
+          <div class="phone-pages">
+            <section id="home" class="phone-page active">
+              <article class="dash-card hero-card">
+                <div class="hero-mini">
+                  <img src="./assets/aedesx-on.webp" alt="AEDES-X prototype">
+                </div>
+                <div>
+                  <span class="online"><i></i><span data-t="online">DEMO ONLINE</span></span>
+                  <h1>AEDES-X</h1>
+                  <p data-t="heroText">Smart mosquito control</p>
+                </div>
+              </article>
+
+              <article class="dash-card">
+                <div class="card-title"><strong data-t="current">Current Status</strong><span id="systemState">● ON</span></div>
+                <div class="status-three">
+                  <div><span class="status-icon uv">☀</span><small data-t="uv">UV Light</small><b id="uvVal">OFF</b></div>
+                  <div><span class="status-icon fan"><span id="fanGlyph">✤</span></span><small data-t="fan">Fan</small><b id="fanVal">OFF</b></div>
+                  <div><span class="status-icon power">⏻</span><small data-t="mainSwitch">Main Switch</small><b id="switchVal">ON</b></div>
+                </div>
+                <div class="ldr-line">
+                  <div><small data-t="ldr">LDR Reading</small><strong id="ldrVal">1200</strong></div>
+                  <div class="ldr-track"><span id="ldrFill"></span></div>
+                  <b id="ldrPill">BRIGHT</b>
+                </div>
+              </article>
+
+              <article class="dash-card">
+                <div class="card-title"><strong data-t="mode">Operating Mode</strong><small data-t="choose">Choose mode</small></div>
+                <div class="mode-grid">
+                  <button class="mode-btn" data-mode="0" type="button"><span>🔧</span><b data-t="manual">Manual</b><small data-t="manualSub">Direct control</small></button>
+                  <button class="mode-btn" data-mode="1" type="button"><span>💡</span><b data-t="auto">Auto LDR</b><small data-t="autoSub">Dark only</small></button>
+                  <button class="mode-btn" data-mode="2" type="button"><span>◷</span><b data-t="timer">Timer</b><small data-t="timerSub">Scheduled</small></button>
+                </div>
+                <div id="manualBox" class="manual-actions">
+                  <button id="manualOn" class="primary" type="button" data-t="turnOn">TURN ON</button>
+                  <button id="manualOff" type="button" data-t="turnOff">TURN OFF</button>
+                </div>
+              </article>
+
+              <article class="dash-card timer-card">
+                <div class="card-title"><strong data-t="countdown">Timer Countdown</strong><small id="nextTiny">DUSK</small></div>
+                <div class="timer-row">
+                  <div><small id="countTag">STARTS IN</small><b id="countWindow">Next: Dusk</b></div>
+                  <strong id="countValue">00:00:00</strong>
+                </div>
+                <div class="schedule-mini"><span>☀ 05:30–07:30</span><span>◐ 18:00–19:30</span></div>
+              </article>
+
+              <article class="dash-card maintenance-summary">
+                <div class="maint-main">
+                  <span class="maint-icon">🔧</span>
+                  <div><strong data-t="maintenance">Maintenance</strong><small id="maintNext">Next: CO₂ mixture</small></div>
+                  <b id="maintBadge">✓ Good</b>
+                </div>
+                <button id="openMaintenance" type="button" data-t="viewMaintenance">View Maintenance</button>
+              </article>
+            </section>
+
+            <section id="control" class="phone-page">
+              <article class="dash-card">
+                <div class="card-title"><strong data-t="control">Control</strong><small data-t="simulationLabel">Browser Simulation</small></div>
+                <label class="control-row">
+                  <div><b data-t="virtualSwitch">Virtual Main Switch</b><small data-t="virtualSwitchHelp">Same lock behaviour as the physical switch.</small></div>
+                  <span class="toggle"><input id="mainSwitchToggle" type="checkbox" checked><i></i></span>
+                </label>
+              </article>
+
+              <article class="dash-card">
+                <div class="card-title"><strong data-t="ambientLight">Ambient Light Simulator</strong><small>GPIO34</small></div>
+                <p class="help" data-t="ambientHelp">Move toward Dark to test Auto LDR mode.</p>
+                <div class="range-labels"><span data-t="bright">Bright</span><b id="ldrSliderValue">1200</b><span data-t="dark">Dark</span></div>
+                <input id="ldrSlider" type="range" min="200" max="4095" value="1200" step="25">
+                <div class="thresholds">OFF ≤ 1800 · ON ≥ 2100</div>
+              </article>
+
+              <article class="dash-card">
+                <div class="card-title"><strong data-t="mode">Operating Mode</strong></div>
+                <div class="mode-grid">
+                  <button class="mode-btn control-mode" data-mode="0" type="button"><span>🔧</span><b data-t="manual">Manual</b></button>
+                  <button class="mode-btn control-mode" data-mode="1" type="button"><span>💡</span><b data-t="auto">Auto LDR</b></button>
+                  <button class="mode-btn control-mode" data-mode="2" type="button"><span>◷</span><b data-t="timer">Timer</b></button>
+                </div>
+                <div id="controlManualBox" class="manual-actions">
+                  <button class="manual-on primary" type="button" data-t="turnOn">TURN ON</button>
+                  <button class="manual-off" type="button" data-t="turnOff">TURN OFF</button>
+                </div>
+              </article>
+
+              <button id="physicalModeBtn" class="physical-button" type="button">
+                <span>●</span>
+                <div><b data-t="pressModeButton">Press Physical Mode Button</b><small>GPIO32 · Manual → Auto LDR → Timer</small></div>
+              </button>
+            </section>
+
+            <section id="timer" class="phone-page">
+              <article class="dash-card">
+                <div class="card-title"><strong data-t="timer">Timer</strong><small data-t="browserClock">Browser clock</small></div>
+                <div class="info-row"><span data-t="currentTime">Current Time</span><b id="timerClock">--:--:--</b></div>
+                <div class="info-row"><span data-t="dawn">Dawn</span><b>05:30–07:30</b></div>
+                <div class="info-row"><span data-t="dusk">Dusk</span><b>18:00–19:30</b></div>
+              </article>
+
+              <article class="dash-card">
+                <label class="control-row">
+                  <div><b data-t="useDemoTime">Use demo time</b><small data-t="useDemoTimeHelp">Test scheduled periods instantly.</small></div>
+                  <span class="toggle"><input id="demoTimeToggle" type="checkbox"><i></i></span>
+                </label>
+                <div id="demoTimeControls" class="demo-time">
+                  <label><span data-t="demoHour">Demo hour</span><input id="demoHour" type="range" min="0" max="23" value="18" step=".25"><b id="demoHourVal">18:00</b></label>
+                  <div class="quick-time">
+                    <button type="button" data-time="6.25">06:15 Dawn</button>
+                    <button type="button" data-time="12">12:00 Day</button>
+                    <button type="button" data-time="18.5">18:30 Dusk</button>
+                    <button type="button" data-time="22">22:00 Night</button>
+                  </div>
+                </div>
+              </article>
+            </section>
+
+            <section id="system" class="phone-page">
+              <article class="dash-card">
+                <div class="card-title"><strong data-t="system">System</strong><small>DEMO</small></div>
+                <div class="info-row"><span data-t="hotspot">Prototype Hotspot</span><b>AedesX-Control</b></div>
+                <div class="info-row"><span data-t="localIp">Local IP</span><b>192.168.4.1</b></div>
+                <div class="info-row"><span data-t="runtime">Demo Runtime</span><b id="uptime">00:00:00</b></div>
+                <div class="info-row"><span data-t="activeTime">Trap Active Time</span><b id="activeTime">00:00:00</b></div>
+                <div class="info-row"><span data-t="threshold">LDR Threshold</span><b>2100 / 1800</b></div>
+              </article>
+              <article class="note"><b data-t="noteTitle">Portfolio demo</b><p data-t="noteText">This public website simulates the ESP32 logic in the browser. It does not remotely control the real prototype.</p></article>
+            </section>
+
+            <section id="maintenancePage" class="phone-page">
+              <button id="maintenanceBack" class="back" type="button">‹ <span data-t="home">Home</span></button>
+              <article class="dash-card">
+                <div class="card-title"><strong data-t="co2Mixture">CO₂ Mixture</strong><b class="badge" id="co2Badge">○ Not Set</b></div>
+                <div class="maint-dates">
+                  <div><small data-t="lastReplaced">Last replaced</small><b id="co2Last">—</b></div>
+                  <div><small data-t="nextReplacement">Next replacement</small><b id="co2Next">—</b></div>
+                </div>
+                <p class="remaining" id="co2Remaining">Setup required</p>
+                <button id="markCo2" class="primary full" type="button" data-t="markReplaced">Mark as Replaced</button>
+                <div class="stepper-row"><span data-t="replacementInterval">Replacement interval</span><div><button type="button" data-item="co2" data-delta="-1">−</button><b id="co2Days">14</b><button type="button" data-item="co2" data-delta="1">+</button></div></div>
+              </article>
+              <article class="dash-card">
+                <div class="card-title"><strong data-t="meshCleaning">Mesh Cleaning</strong><b class="badge" id="meshBadge">○ Not Set</b></div>
+                <div class="maint-dates">
+                  <div><small data-t="lastCleaned">Last cleaned</small><b id="meshLast">—</b></div>
+                  <div><small data-t="nextCleaning">Next cleaning</small><b id="meshNext">—</b></div>
+                </div>
+                <p class="remaining" id="meshRemaining">Setup required</p>
+                <button id="markMesh" class="primary full" type="button" data-t="markCleaned">Mark as Cleaned</button>
+                <div class="stepper-row"><span data-t="cleaningInterval">Cleaning interval</span><div><button type="button" data-item="mesh" data-delta="-1">−</button><b id="meshDays">14</b><button type="button" data-item="mesh" data-delta="1">+</button></div></div>
+              </article>
+            </section>
+          </div>
+
+          <nav class="phone-nav">
+            <button class="active" data-page="home" type="button"><span>⌂</span><small data-t="home">Home</small></button>
+            <button data-page="control" type="button"><span>☷</span><small data-t="control">Control</small></button>
+            <button data-page="timer" type="button"><span>◷</span><small data-t="timer">Timer</small></button>
+            <button data-page="system" type="button"><span>⚙</span><small data-t="system">System</small></button>
+          </nav>
+        </div>
+        <div class="home-indicator"></div>
+      </div>
+    </section>
+
+    <section class="product-zone" aria-label="Real product visual preview">
+      <div class="product-caption">
+        <span class="step">02</span>
+        <div>
+          <strong data-t="watchProduct">Watch the prototype respond</strong>
+          <small data-t="watchProductSub">The image switches between real ON and OFF product states.</small>
+        </div>
+      </div>
+
+      <div class="room-scene">
+        <div class="window"><span></span><span></span></div>
+        <div class="plant plant-a"><i></i><i></i><i></i></div>
+        <div class="plant plant-b"><i></i><i></i></div>
+        <div class="wall-shadow"></div>
+        <div class="table">
+          <div class="product-shadow"></div>
+          <div class="product-stack">
+            <img id="productOff" class="product-img active" src="./assets/aedesx-off.webp" alt="Real AEDES-X prototype with UV and green indicator off">
+            <img id="productOn" class="product-img" src="./assets/aedesx-on.webp" alt="Real AEDES-X prototype with UV and green indicator on">
+          </div>
+          <div class="product-state-card">
+            <div class="state-heading"><span id="stateDot"></span><strong id="productState">TRAP OFF</strong></div>
+            <div class="state-grid">
+              <div><small data-t="mode">Mode</small><b id="productMode">MANUAL</b></div>
+              <div><small data-t="uv">UV Light</small><b id="productUv">OFF</b></div>
+              <div><small data-t="fan">Fan</small><b id="productFan">OFF</b></div>
+              <div><small data-t="ldr">LDR</small><b id="productLdr">1200</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="experience-note">
+        <span>↔</span>
+        <p data-t="experienceNote">Try Manual ON/OFF, Auto LDR, Timer, the virtual main switch, or the physical-mode button. The product visual updates immediately.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
