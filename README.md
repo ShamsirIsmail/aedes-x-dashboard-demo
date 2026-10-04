@@ -1,63 +1,67 @@
-# AEDES-X Interactive Dashboard Demo
+# AEDES-X — Interactive Product Demo
 
-A GitHub Pages-ready interactive portfolio demo for **AEDES-X**, an ESP32-based smart mosquito-trap prototype developed as a STEM project.
+An interactive portfolio experience for the **AEDES-X ESP32 Smart Mosquito Trap**.
 
-## What this demo shows
+This GitHub Pages demo is designed so a visitor can **use the dashboard inside a visual phone** and immediately see the **real AEDES-X prototype change state beside it**.
 
-This public demo mirrors the visual identity and core behaviour of the real local ESP32 dashboard:
+> The public website is a browser simulation of the real ESP32 logic. It does not remotely control the physical prototype.
 
-- Manual Mode
-- Auto LDR Mode with the same hysteresis thresholds
-  - Dark ON: `LDR >= 2100`
-  - Light OFF: `LDR <= 1800`
-- Timer Mode
-  - Dawn: `05:30–07:30`
-  - Dusk: `18:00–19:30`
-- Virtual main switch lock
-- Simulated physical mode button (`GPIO32`)
-- Live UV + fan state
-- Live timer countdown
-- BM / EN language switch
-- Maintenance reminder demo
-- Simulated OLED output
-- Real AEDES-X prototype photograph
+## Experience
 
-## Important portfolio note
+The page is split into two connected areas:
 
-This website is an **interactive simulation**, not a remotely connected live device.
+- **Interactive Phone Dashboard** — visitors can tap Manual, Auto LDR, Timer, the virtual main switch, the LDR simulator, maintenance controls, and the simulated physical mode button.
+- **Real Product Preview** — the website switches between two processed states of the real prototype photograph:
+  - UV / green indicator OFF
+  - UV / green indicator ON
 
-The real prototype dashboard runs locally on the ESP32 hotspot (`AedesX-Control`, `192.168.4.1`).  
-This GitHub Pages version reproduces the interaction in browser-side JavaScript so visitors can test the project without having the physical prototype in front of them.
+The OFF state is produced from the original real prototype photograph using image processing. No synthetic product image is required.
 
-Maintenance data in this demo is stored in browser `localStorage`. It is device/browser-specific and may be removed when browser data is cleared.
+## Core demo logic
+
+| Feature | Behaviour |
+|---|---|
+| Manual | User turns the trap ON/OFF |
+| Auto LDR | ON when ADC ≥ 2100, OFF when ADC ≤ 1800 |
+| Timer Dawn | 05:30–07:30 |
+| Timer Dusk | 18:00–19:30 |
+| Main switch | Locks controls when OFF |
+| Physical mode button | Manual → Auto LDR → Timer |
+| BM / EN | Browser-side language switching |
+| Maintenance | Browser `localStorage` in the public demo |
+
+## Real prototype vs public demo
+
+| Real ESP32 Prototype | GitHub Pages Demo |
+|---|---|
+| ESP32 GPIO controls hardware | Browser JavaScript simulates state |
+| Real UV LED + fan | Real product photo switches ON/OFF state |
+| Real LDR ADC | Interactive light slider |
+| SSD1306 OLED | Dashboard state preview |
+| Local hotspot `AedesX-Control` | Public GitHub Pages |
+| ESP32 Preferences | Browser localStorage for demo maintenance |
 
 ## Run locally
 
-No build step or package installation is required.
-
-You can simply open `index.html`, or run a small local server:
+No build process is required.
 
 ```bash
 python -m http.server 8000
 ```
 
-Then open:
+Open:
 
 ```text
 http://localhost:8000
 ```
 
-## Publish with GitHub Pages
+## Deploy to GitHub Pages
 
-1. Create a new GitHub repository, for example `aedes-x-dashboard-demo`.
-2. Upload all files in this folder to the repository root.
-3. In GitHub, open **Settings → Pages**.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Select the `main` branch and `/ (root)`.
-6. Save.
-7. GitHub will provide the public URL after deployment.
-
-The project uses only relative file paths, so no code changes are required for a normal GitHub Pages repository.
+1. Upload the repository files to GitHub.
+2. Open **Settings → Pages**.
+3. Choose **Deploy from a branch**.
+4. Choose `main` and `/ (root)`.
+5. Save and wait for the public URL.
 
 ## Files
 
@@ -66,23 +70,26 @@ The project uses only relative file paths, so no code changes are required for a
 ├── index.html
 ├── styles.css
 ├── app.js
-├── .nojekyll
+├── README.md
 └── assets/
-    └── aedesx-prototype.webp
+    ├── aedesx-on.webp
+    └── aedesx-off.webp
 ```
 
-## Suggested portfolio description
-
-> AEDES-X is an ESP32-based smart mosquito-trap prototype with Manual, light-responsive Auto LDR, and scheduled Timer modes. I designed a local mobile dashboard for device control and status monitoring, with an OLED display and physical-button fallback. This public interactive demo recreates the dashboard behaviour in the browser so the project can be explored without connecting to the physical ESP32.
-
-## Tech
+## Tech stack
 
 - HTML
 - CSS
 - Vanilla JavaScript
-- Browser `localStorage` for demo maintenance history
+- GitHub Pages
+- Browser localStorage
 - No framework
-- No external CDN
-- No internet-dependent assets
+- No backend
+- No external API
+- No external runtime dependency
 
-The real embedded version runs on ESP32 using Arduino C++, Wi-Fi AP mode, `WebServer`, `Preferences`, and an SSD1306 OLED.
+## Portfolio note
+
+AEDES-X is an ESP32-based smart mosquito-trap prototype featuring Manual, light-responsive Auto LDR, and scheduled Timer modes, together with a local mobile dashboard, OLED feedback, maintenance reminders, and a physical-button fallback.
+
+This public interactive demo recreates the device behaviour so reviewers can explore the project without having the physical hardware in front of them.
