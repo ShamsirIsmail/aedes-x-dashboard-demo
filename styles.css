@@ -106,12 +106,15 @@ button,input{font:inherit}
 .lang button.active{background:white;color:var(--forest);box-shadow:0 2px 7px rgba(0,0,0,.07)}
 
 /* ── LOCK BANNER ── */
-.lock-banner{display:none;align-items:center;gap:8px;background:#fff1f1;color:#983838;border-bottom:1px solid #f2d2d2;padding:8px 14px;flex:0 0 auto}
+.lock-banner{display:none;align-items:center;justify-content:space-between;gap:8px;background:#fff1f1;color:#983838;border-bottom:1px solid #f2d2d2;padding:8px 12px;flex:0 0 auto}
 .lock-banner.show{display:flex}
-.lock-banner>span{width:24px;height:24px;border-radius:7px;background:#ffdede;display:grid;place-items:center;font-weight:900}
+.lock-banner>span{width:24px;height:24px;border-radius:7px;background:#ffdede;display:grid;place-items:center;font-weight:900;flex:0 0 auto}
+.lock-banner>div{flex:1;min-width:0}
 .lock-banner strong,.lock-banner small{display:block}
 .lock-banner strong{font-size:10px}
 .lock-banner small{font-size:8px;color:#ac6262;margin-top:1px}
+.lock-action-btn{border:0;background:#d83c3c;color:#fff;border-radius:8px;padding:5px 9px;font-size:9px;font-weight:800;cursor:pointer;white-space:nowrap;transition:background .15s}
+.lock-action-btn:hover{background:#b72c2c}
 
 /* ── WI-FI HINT BANNER ── */
 .wifi-hint{display:flex;align-items:center;gap:9px;background:linear-gradient(135deg,#edf7f1,#e8f5f0);border-bottom:1px solid #c8e4d3;padding:9px 12px;flex:0 0 auto;transition:opacity .3s,max-height .3s}

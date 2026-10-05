@@ -228,6 +228,15 @@ $("manualOff").addEventListener("click",()=>manual(false));
 $$(".manual-on").forEach(b=>b.addEventListener("click",()=>manual(true)));
 $$(".manual-off").forEach(b=>b.addEventListener("click",()=>manual(false)));
 $("mainSwitchToggle").addEventListener("change",e=>{state.mainSwitch=e.target.checked;render()});
+const lockTurnOnBtn = $("lockTurnOnBtn");
+if(lockTurnOnBtn){
+  lockTurnOnBtn.addEventListener("click",()=>{
+    state.mainSwitch = true;
+    $("mainSwitchToggle").checked = true;
+    toast(state.lang === "bm" ? "Suis utama dihidupkan semula" : "Main switch turned ON");
+    render();
+  });
+}
 $("ldrSlider").addEventListener("input",e=>{state.ldr=Number(e.target.value);render()});
 $("physicalModeBtn").addEventListener("click",()=>{if(!state.mainSwitch){toast(tr("switchFirst"));return}state.mode=(state.mode+1)%3;render()});
 $("demoTimeToggle").addEventListener("change",e=>{state.demoTime=e.target.checked;render()});
