@@ -14,9 +14,66 @@
   <meta property="og:url" content="https://shamsirismail.github.io/aedes-x-dashboard-demo/">
   <meta property="og:image" content="./assets/aedesx-on.webp">
   <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+
+  <!-- ── ONBOARDING OVERLAY ── -->
+  <div id="onboarding" class="onb-overlay" role="dialog" aria-modal="true" aria-label="AEDES-X Onboarding">
+    <div class="onb-panel">
+      <div class="onb-header">
+        <div class="onb-logo">AEDES-<span>X</span></div>
+        <button id="onbSkip" class="onb-skip-btn" type="button" data-t="onbSkip">Skip Tour ✕</button>
+      </div>
+      <div class="onb-steps-track">
+        <div class="onb-step active" data-step="0">
+          <div class="onb-step-icon">📶</div>
+          <div class="onb-step-body">
+            <strong data-t="onbStep0Title">Connect to Wi-Fi Hotspot</strong>
+            <p data-t="onbStep0Body">In real use, open your phone's Wi-Fi settings and connect to <code>AedesX-Control</code>. The trap creates its own local network — no internet required.</p>
+          </div>
+        </div>
+        <div class="onb-step" data-step="1">
+          <div class="onb-step-icon">📱</div>
+          <div class="onb-step-body">
+            <strong data-t="onbStep1Title">Open the Dashboard</strong>
+            <p data-t="onbStep1Body">Once connected, open a browser and go to <code>192.168.4.1</code>. The AEDES-X dashboard loads on your phone.</p>
+          </div>
+        </div>
+        <div class="onb-step" data-step="2">
+          <div class="onb-step-icon">🔧</div>
+          <div class="onb-step-body">
+            <strong data-t="onbStep2Title">Choose an Operating Mode</strong>
+            <p data-t="onbStep2Body">Select <b>Manual</b> for direct on/off, <b>Auto LDR</b> for light-triggered activation, or <b>Timer</b> to run during dawn and dusk windows automatically.</p>
+          </div>
+        </div>
+        <div class="onb-step" data-step="3">
+          <div class="onb-step-icon">👁</div>
+          <div class="onb-step-body">
+            <strong data-t="onbStep3Title">Watch the Prototype Respond</strong>
+            <p data-t="onbStep3Body">On this demo page, the product visual on the right updates immediately. UV activates, the fan spins, and the green indicator turns on — just like the real device.</p>
+          </div>
+        </div>
+      </div>
+      <div class="onb-footer">
+        <div class="onb-dots">
+          <span class="onb-dot active" data-dot="0"></span>
+          <span class="onb-dot" data-dot="1"></span>
+          <span class="onb-dot" data-dot="2"></span>
+          <span class="onb-dot" data-dot="3"></span>
+        </div>
+        <div class="onb-actions">
+          <button id="onbPrev" class="onb-btn-secondary" type="button" data-t="onbBack">Back</button>
+          <button id="onbNext" class="onb-btn-primary" type="button" data-t="onbNext">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SITE HEADER ── -->
   <header class="sitebar">
     <div class="sitebrand">
       <div class="logo">AEDES-<span>X</span></div>
@@ -25,10 +82,22 @@
         <small data-t="portfolioSub">Control the dashboard and watch the real prototype respond.</small>
       </div>
     </div>
-    <div class="demo-label"><span></span><b data-t="simulationLabel">Browser Simulation</b></div>
+    <div class="header-right">
+      <div class="scenario-bar" aria-label="Quick test scenarios">
+        <span class="scenario-label" data-t="quickTest">Quick Test</span>
+        <button class="scenario-btn" id="sc-bright" type="button" title="Bright Room">☀ <span data-t="scBright">Bright</span></button>
+        <button class="scenario-btn" id="sc-dark"   type="button" title="Dark Room">🌑 <span data-t="scDark">Dark</span></button>
+        <button class="scenario-btn" id="sc-dawn"   type="button" title="Dawn Window">🌅 <span data-t="scDawn">Dawn</span></button>
+        <button class="scenario-btn" id="sc-dusk"   type="button" title="Dusk Window">🌆 <span data-t="scDusk">Dusk</span></button>
+        <button class="scenario-btn scenario-btn--off" id="sc-off" type="button" title="Main Switch OFF">⏻ <span data-t="scOff">Switch Off</span></button>
+      </div>
+      <button id="openTourBtn" class="tour-btn" type="button" title="Replay Walkthrough Tour">📖 <span data-t="tourBtn">Tour</span></button>
+      <div class="demo-label"><span></span><b data-t="simulationLabel">Browser Simulation</b></div>
+    </div>
   </header>
 
   <main class="experience">
+    <!-- ── LEFT: PHONE ── -->
     <section class="phone-zone" aria-label="Interactive dashboard phone">
       <div class="phone-caption">
         <span class="step">01</span>
@@ -39,6 +108,25 @@
       </div>
 
       <div class="phone">
+        <!-- Phone chrome details -->
+        <div class="phone-status-bar">
+          <span class="psb-time" id="psbTime">09:41</span>
+          <div class="psb-icons">
+            <span class="psb-signal">
+              <i></i><i></i><i></i><i></i>
+            </span>
+            <span class="psb-wifi">
+              <svg viewBox="0 0 20 14" fill="currentColor" width="14" height="10"><path d="M10 2.5C13.18 2.5 16.05 3.76 18.18 5.82L20 4C17.38 1.5 13.87 0 10 0S2.62 1.5 0 4l1.82 1.82C3.95 3.76 6.82 2.5 10 2.5zM10 7c-2.04 0-3.9.76-5.3 2l1.46 1.46A5.48 5.48 0 0110 9a5.48 5.48 0 013.84 1.46L15.3 9A7.46 7.46 0 0010 7zm0 4.5c-.84 0-1.6.32-2.18.84L10 14l2.18-1.66A3.03 3.03 0 0010 11.5z"/></svg>
+            </span>
+            <span class="psb-battery">
+              <svg viewBox="0 0 25 12" fill="currentColor" width="22" height="11">
+                <rect x="0" y="1" width="22" height="10" rx="2.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+                <rect x="22.5" y="4" width="2.5" height="4" rx="1" fill="currentColor"/>
+                <rect x="1.5" y="2.5" width="16" height="7" rx="1.5" fill="currentColor"/>
+              </svg>
+            </span>
+          </div>
+        </div>
         <div class="speaker"></div>
         <div class="camera"></div>
         <div class="phone-screen">
@@ -58,7 +146,18 @@
             <div><strong data-t="locked">Main switch OFF</strong><small data-t="lockedHelp">Controls are locked.</small></div>
           </div>
 
+          <!-- Wi-Fi onboarding hint (inline, dismissable) -->
+          <div id="wifiHint" class="wifi-hint">
+            <span class="wifi-hint-icon">📶</span>
+            <div>
+              <b data-t="wifiHintTitle">Connect to AedesX-Control</b>
+              <small data-t="wifiHintSub">In real use: Wi-Fi → AedesX-Control → 192.168.4.1</small>
+            </div>
+            <button id="wifiHintClose" type="button" aria-label="Dismiss">✕</button>
+          </div>
+
           <div class="phone-pages">
+            <!-- HOME PAGE -->
             <section id="home" class="phone-page active">
               <article class="dash-card hero-card">
                 <div class="hero-mini">
@@ -117,6 +216,7 @@
               </article>
             </section>
 
+            <!-- CONTROL PAGE -->
             <section id="control" class="phone-page">
               <article class="dash-card">
                 <div class="card-title"><strong data-t="control">Control</strong><small data-t="simulationLabel">Browser Simulation</small></div>
@@ -153,6 +253,7 @@
               </button>
             </section>
 
+            <!-- TIMER PAGE -->
             <section id="timer" class="phone-page">
               <article class="dash-card">
                 <div class="card-title"><strong data-t="timer">Timer</strong><small data-t="browserClock">Browser clock</small></div>
@@ -178,6 +279,7 @@
               </article>
             </section>
 
+            <!-- SYSTEM PAGE -->
             <section id="system" class="phone-page">
               <article class="dash-card">
                 <div class="card-title"><strong data-t="system">System</strong><small>DEMO</small></div>
@@ -190,6 +292,7 @@
               <article class="note"><b data-t="noteTitle">Portfolio demo</b><p data-t="noteText">This public website simulates the ESP32 logic in the browser. It does not remotely control the real prototype.</p></article>
             </section>
 
+            <!-- MAINTENANCE PAGE -->
             <section id="maintenancePage" class="phone-page">
               <button id="maintenanceBack" class="back" type="button">‹ <span data-t="home">Home</span></button>
               <article class="dash-card">
@@ -226,12 +329,13 @@
       </div>
     </section>
 
+    <!-- ── RIGHT: PRODUCT PREVIEW ── -->
     <section class="product-zone" aria-label="Real product visual preview">
       <div class="product-caption">
         <span class="step">02</span>
         <div>
           <strong data-t="watchProduct">Watch the prototype respond</strong>
-          <small data-t="watchProductSub">The image switches between real ON and OFF product states.</small>
+          <small data-t="watchProductSub">The product switches between real ON and OFF states.</small>
         </div>
       </div>
 
@@ -244,10 +348,26 @@
             <span class="shadow-uv-glow"></span>
           </div>
           <div class="product-stack">
-            <img id="productOff" class="product-img active" src="./assets/aedesx-off.webp" alt="Real AEDES-X prototype with UV and green indicator off">
-            <img id="productOn" class="product-img" src="./assets/aedesx-on.webp" alt="Real AEDES-X prototype with UV and green indicator on">
+            <!-- OFF state: static image -->
+            <img id="productOff" class="product-img active" src="./assets/aedesx-off.webp" alt="Real AEDES-X prototype — UV and indicator off">
+            <!-- ON state: CSS-animated live scene overlaid on the ON photo -->
+            <div id="productOn" class="product-img product-on-live">
+              <img class="product-on-base" src="./assets/aedesx-on.webp" alt="Real AEDES-X prototype — UV and indicator on">
+              <!-- Animated overlay: spinning fan glyph centred on the physical fan area -->
+              <div class="product-fan-anim" aria-hidden="true">
+                <svg class="fan-blade" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="30" cy="30" r="5" fill="rgba(80,80,100,0.6)"/>
+                  <path d="M30 25 C30 25 34 10 40 12 C46 14 44 22 38 24 C42 22 52 26 50 32 C48 38 40 36 36 32 C38 36 36 46 30 46 C24 46 22 38 26 32 C22 36 14 38 12 32 C10 26 20 22 24 24 C18 22 16 14 22 12 C28 10 30 25 30 25Z" fill="rgba(60,60,80,0.5)"/>
+                </svg>
+              </div>
+              <!-- UV pulse glow overlay centred on the UV strip area -->
+              <div class="product-uv-pulse" aria-hidden="true"></div>
+              <!-- Green indicator blink -->
+              <div class="product-indicator-on" aria-hidden="true"></div>
+            </div>
           </div>
         </div>
+
         <div class="product-state-card">
           <div class="state-heading"><span id="stateDot"></span><strong id="productState">TRAP OFF</strong></div>
           <div class="state-grid">
